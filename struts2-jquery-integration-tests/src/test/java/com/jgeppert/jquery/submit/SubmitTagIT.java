@@ -125,8 +125,6 @@ public class SubmitTagIT {
 
         wait.until(JQUERY_IDLE);
 
-        wait.until(JQUERY_IDLE);
-
 	WebElement ajaxeventsdiv = driver.findElement(By.id("ajaxeventsdiv"));
         Assert.assertEquals("ajax submit clickedajax submit complete", ajaxeventsdiv.getText());
         Assert.assertEquals("Echo : something to echo", formResult.getText());
@@ -154,6 +152,28 @@ public class SubmitTagIT {
 
         Assert.assertEquals("Echo : firstform", result1.getText());
         Assert.assertEquals("Echo : secondform", result2.getText());
+    }
+
+    @Test
+    public void testFormSubmitOnClickTopic() {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+
+        driver.get(baseUrl + "/submit/on-click-topic.action");
+        WebElement formResult = driver.findElement(By.id("formResult"));
+        WebElement echoInput = driver.findElement(By.id("echo"));
+        WebElement ajaxSubmit = driver.findElement(By.id("formsubmit"));
+
+        Assert.assertEquals("formResult div", formResult.getText());
+        Assert.assertEquals("something to echo", echoInput.getAttribute("value"));
+
+        ajaxSubmit.click();
+
+	WebElement ajaxeventsdiv = driver.findElement(By.id("ajaxeventsdiv"));
+        Assert.assertEquals("ajax submit clicked", ajaxeventsdiv.getText());
+
+        wait.until(JQUERY_IDLE);
+
+        Assert.assertEquals("Echo : something to echo", formResult.getText());
     }
 }
 
